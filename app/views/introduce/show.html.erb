@@ -1,0 +1,15 @@
+<%= stylesheet_link_tag 'introduceshow', :media => "all" %>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class=introduceall>
+<% if user_signed_in? %>
+
+
+<%=link_to(user_path(current_user.id)) do %>
+        <button class="mypage" >マイページを表示する</button>
+    <%end%>
+<% end %>
+
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br>

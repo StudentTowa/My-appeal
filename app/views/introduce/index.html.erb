@@ -1,0 +1,138 @@
+<%= stylesheet_link_tag 'introduceindex', :media => "all" %>
+
+<div class="first">
+    <div class="x">MY</div>
+    <div class="y">APPEAL</div>
+</div>
+
+<div class="second">
+<br><br><br>
+    <div class="balloon">
+    <br><br><br><br>
+    <div class="balloon-title">MY APPEALへようこそ</div>
+    <br>
+    <div class="balloon-text">このサイトでは、用意されているお題に対して、自分の紹介したい曲、スポーツ、特技などを自由にアピールするサイトになっています。</div>
+    </div>
+    <br>
+    <br><br>
+</div>
+
+<br>
+    <br>
+
+<p id="text"></p>
+<h2>お題一覧</h2>
+<div  class="text">（投稿するにはログインが必要です）</div>
+
+<div class="container">
+    <div class="orange">
+    <h3><div class="green">1.自分の聴いてほしい曲、音楽</div></h3>
+
+    <div class="image"><%= image_tag 'music.png', size: "300x300"%></div>
+    <br>
+    <%=link_to(musicpresents_path) do %>
+            <button class="path1" >コメントを見る</button>
+        <%end%>
+        <%=link_to(new_musicpresent_path) do %>
+            <button class="path1" >新規投稿する</button>
+        <%end%>
+    </div>
+
+
+    <div class="orange">
+    <h3><div class="blue">2.好きなスポーツ</div></h3>
+
+    <div class="image"><%= image_tag 'sports.png', size: "300x300"%></div>
+    <br>
+    <%=link_to(sportspresents_path) do %>
+            <button class="path2" >コメントを見る</button>
+        <%end%>
+            <%=link_to(new_sportspresent_path) do %>
+            <button class="path2" >新規投稿する</button>
+        <%end%>
+    </div>
+
+
+    <div class="orange">
+    <h3><div class="pink">3.好きなスイーツ、スイーツ巡り</div></h3>
+
+    <div class="image"><%= image_tag 'sweets.png', size: "300x300"%></div>
+    <br>
+    <%=link_to(sweetspresents_path) do %>
+            <button class="path3" >コメントを見る</button>
+        <%end%>
+            <%=link_to(new_sweetspresent_path) do %>
+            <button class="path3" >新規投稿する</button>
+        <%end%>
+    </div>
+
+
+    <div class="orange">
+    <h3><div class="purple">4.お気に入りの映画</div></h3>
+
+    <div class="image"><%= image_tag 'movie.png', size: "300x300"%></div>
+    <br>
+    <%=link_to(moviepresents_path) do %>
+            <button class="path4" >コメントを見る</button>
+        <%end%>
+            <%=link_to(new_moviepresent_path) do %>
+            <button class="path4" >新規投稿する</button>
+        <%end%>
+    </div>
+
+
+    <div class="orange">
+    <h3><div class="red">5.自分の持つ特技</div></h3>
+
+    <div class="image"><%= image_tag 'skill.png', size: "300x300"%></div>
+
+    <br>
+    <%=link_to(skillpresents_path) do %>
+            <button class="path5" >コメントを見る</button>
+        <%end%>
+            <%=link_to(new_skillpresent_path) do %>
+            <button class="path5" >新規投稿する</button>
+        <%end%>
+    </div>
+
+    <div class="orange">
+    <h3><div class="yellow">6.自分にとってのリラックスタイム</div></h3>
+
+    <div class="image"><%= image_tag 'relax.png', size: "300x300"%></div>
+    <br>
+    <%=link_to(relaxpresents_path) do %>
+            <button class="path6" >コメントを見る</button>
+        <%end%>
+            <%=link_to(new_relaxpresent_path) do %>
+            <button class="path6" >新規投稿する</button>
+        <%end%>
+    </div>
+
+</div>
+
+
+<br><br><br><br>
+
+    <br>
+<% if user_signed_in? %>
+
+    <div class= "logout"><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></div>
+    <br>
+    <%=link_to(introduce_show_path) do %>
+        <button class="page" >マイページ</button>
+    <%end%>
+
+<% else %>
+<%=link_to("users/sign_up") do %>
+        <button class="page" >新規登録する</button>
+    <%end%>
+<%=link_to(new_user_session_path) do %>
+        <button class="page" >ログインする</button>
+    <%end%>
+<%=link_to(introduce_show_path) do %>
+        <button class="page" >マイページ</button>
+    <%end%>
+
+<%end%>
+<br><br><br><br>
+

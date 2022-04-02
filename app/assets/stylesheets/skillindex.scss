@@ -1,0 +1,126 @@
+
+
+
+.introduction{
+    background-color:rgb(255, 134, 134) ;
+}
+
+.skillform{
+    background-image: url(skill-image.webp);
+    margin: 0px auto;
+    background-color:white ;
+    height: 500px;
+    text-align: center;
+    background-repeat:  no-repeat;
+    background-size:100%;
+    background-position:center center;
+}
+
+
+
+input[type="text"] {
+    width: 300px;
+    height: 30px;
+}
+
+.new {
+    width: 150px;
+    height: 70px;
+    font-size: 32px;
+    font-weight: bold;
+    background-color:rgb(255, 134, 134) ;
+    margin: 50px auto;
+
+}
+
+
+.new:hover {
+    background-color:rgb(255, 200, 200) ;
+}
+
+.skillform{
+    background-color: white;
+    text-align: center;
+}
+
+html {
+    background-color: rgb(255, 134, 134) ; /* 周囲の背景色 */
+}
+
+
+
+.skillpresent {
+    border-top: solid rgb(255, 34, 34) 10px;
+    border-bottom: solid rgb(255, 34, 34) 10px;
+    border-left: double rgb(255, 34, 34) 10px;
+    border-right: double  rgb(255, 34, 34) 10px;
+    background-color: white ;
+    margin-top: 10px;
+    padding-top: 20px;
+    width: 80%;
+    margin: 10px auto;
+}
+
+
+
+
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.body {
+    font-size: 20px;
+    word-break: break-word;
+    text-align: left;
+    
+    
+}
+
+
+
+h3 {
+    margin: 30px auto;
+    text-align: center;
+    background-color:rgb(255, 34, 34) ;
+}
+
+.main-box {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+p {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+.imformation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 25%;
+
+}
+
+
+
+
+
+
+
+input[type="submit"] {
+    width: 110px;
+    height: 40px;
+    font-size: 20px;
+
+
+    background-color: rgb(255, 189, 65);
+}
+
+input[type="submit"]:hover {
+    background-color: rgb(248, 210, 139);
+}

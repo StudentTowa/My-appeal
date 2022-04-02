@@ -1,0 +1,20 @@
+html {
+    background-color: rgb(255, 168, 241) ; /* 周囲の背景色 */
+}
+
+.alls{
+    text-align: center;
+}
+
+input[type="submit"] {
+    width: 200px;
+    height: 120px;
+    font-size: 30px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    background-color: rgb(252, 30, 241);
+}
+
+input[type="submit"]:hover {
+    background-color:rgb(253, 203, 251);
+}

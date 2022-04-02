@@ -1,0 +1,140 @@
+<%= stylesheet_link_tag 'relaxindex', :media => "all" %>
+
+<div class="introduction">
+<h2>自分にとってのリラックスタイム</h2>
+仕事や勉強に集中するのは大事ですが、頑張りすぎず休む時間を作ることも大切です。そこで、その休み時間などに、どのようにリラックスする時間をとっていますか。あなたにとっての有意義なリラックスタイムを押しててください！
+</div>
+
+<div class="relaxform">
+<div class="bg">
+<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+
+
+
+<h4>投稿を検索</h4>
+<%= form_tag({controller:"relaxpresents",action:"index"}, method: :get) do %>
+<%= text_field_tag :search %>
+<%= submit_tag '検索する'  %>
+<% end %>
+
+
+
+
+
+    <%=link_to("relaxpresents/new") do %>
+        <button class="new" >新規投稿</button>
+    <%end%>
+
+
+</div>
+</div>
+
+
+
+
+<div class="relaxpresents-container">
+<p id="relaxlike"></p>
+<h3>高評価順</h3>
+<div class="link"><%= link_to '新規投稿順へ', relaxpresents_path(anchor: 'relaxnew'), class: 'relaxnew' %></div>
+
+<%  @rank_relaxes.each do |t| %>
+<div class="relaxpresent">
+    <div class="main-box">
+        <div class="left-container">
+
+        <div class="title"><%= t.title %> </div>
+        <br>
+        
+        <div class="body"><%= t.body %></div>
+        <br> 
+        <%= image_tag t.image_url, size: "300x250" if t.image? %>
+        <br>
+
+            <% if user_signed_in? %>
+                <% if current_user.already_relaxliked?(t) %>
+                <%= link_to relaxpresent_relaxlike_path(id: t.id, relaxpresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i> <%=t.relaxlikes.count %>
+                <% end %>
+                <% else %>
+                <%= link_to relaxpresent_relaxlikes_path(id: t.id, relaxpresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.relaxlikes.count %>
+                <% end %>
+        <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= t.relaxlikes.count %>
+        <% end %>
+                            <div class="right-container">
+                            <%= link_to "詳細へ",relaxpresent_path(t.id) %>
+                            <% if user_signed_in? && current_user.id == t.user_id %>
+                            <%= link_to "編集する", edit_relaxpresent_path(t.id) %>
+
+                            <%= button_to "削除する", relaxpresent_path(t.id), method: :delete %>
+                            <% end %> 
+                            </div>
+        </div>
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+
+<br>
+<p id="relaxnew"></p>
+<h3>新規投稿順</h3>
+<div class="link"><%= link_to '高評価順へ', relaxpresents_path(anchor: 'relaxlike'), class: 'relaxlike' %></div>
+<br>
+
+<% @relaxes.each do |t| %>
+<div class="relaxpresent">
+    <div class="main-box">
+
+            <div class="left-container">
+            <div class="title"><%= t.title %> </div>
+            <br>
+            <div class="body"><%= t.body %> </div> 
+            <br>
+            <%= image_tag t.image_url, size: "300x250" if t.image? %>
+            
+            <br>
+
+
+            <% if user_signed_in? %>
+            <% if current_user.already_relaxliked?(t) %>
+                <%= link_to relaxpresent_relaxlike_path(id: t.id, relaxpresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= t.relaxlikes.count %>
+                <% end %>
+            <% else %>
+                <%= link_to relaxpresent_relaxlikes_path(id: t.id, relaxpresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.relaxlikes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="fas fa-heart"></i><%= t.relaxlikes.count %>
+        <% end %>
+
+                    <div class="right-container">
+                    <%= link_to "詳細へ",relaxpresent_path(t.id) %>
+                    <% if user_signed_in? && current_user.id == t.user_id %>
+                    <%= link_to "編集する", edit_relaxpresent_path(t.id) %>
+
+                    <%= button_to "削除する", relaxpresent_path(t.id), method: :delete %>
+                    <% end %> 
+                    </div>
+            </div>
+            
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+<%= link_to 'トップページ', introduce_index_path(anchor: 'text'), class: 'text' %>
+<br>
+<br>

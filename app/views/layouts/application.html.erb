@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myappeal</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    
+    <header style="z-index:10000">
+    
+      <h1>MY APPEAL</h1>
+      <div class="header-list">
+      <ul class="not-login">
+        <li><%= link_to "TOP", introduce_index_path(anchor: 'text'), class: 'text' %></li>
+        <% if user_signed_in? %>
+        <div class="log-in">新規登録</div><div class="log-in2">ログイン</div>
+        <% else %>
+        <li><%= link_to "新規登録",new_user_registration_path %></li>
+        <li><%= link_to "ログイン",new_user_session_path %></li>
+        <% end %>
+      </ul>
+      </div>
+    </header>
+
+
+
+
+    <%= yield %>
+
+
+
+
+        <footer>
+    <p>Copyright © towa All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

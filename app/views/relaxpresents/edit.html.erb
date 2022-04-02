@@ -1,0 +1,22 @@
+<%= stylesheet_link_tag 'relaxedit', :media => "all" %>
+
+
+<%= link_to "トップに戻る", relaxpresents_path %>
+
+
+<%= form_for @relax do |f| %>
+<div class="alls">
+
+    <%= f.label :title %>
+    <%= f.text_field :title, :size => 70 %> 
+    <br>
+    <%= f.label :body %>
+    <%= f.text_area :body, :size => "150x30" %> 
+    <br>
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+    <br>
+    <%= f.submit "編集する" %>
+    <% end %>
+
+</div>

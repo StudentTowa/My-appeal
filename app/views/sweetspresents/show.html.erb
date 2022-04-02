@@ -1,0 +1,80 @@
+<%= stylesheet_link_tag 'sweetsshow', :media => "all" %>
+
+
+<br><br><br><br>
+    <%= link_to "一覧に戻る", sweetspresents_path %>
+<div class="shows">
+    <div class="sweetspresents">
+        
+        <p><div class="title"><%= @sweet.title %></div></p>
+        <p><div class="body"><%= @sweet.body %></div></p>
+        <%= image_tag @sweet.image_url, size: "250x200" if @sweet.image? %>
+        <br>
+        <p><%= @sweet.user.name %></p>
+        <p><%= @sweet.created_at %></p>
+
+
+
+
+        <% if user_signed_in? %>
+            <% if current_user.already_sweetsliked?(@sweet) %>
+                <%= link_to sweetspresent_sweetslike_path(@sweet), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= @sweet.sweetslikes.count %>
+                <% end %>
+            <% else %>
+            <%= link_to sweetspresent_sweetslikes_path(@sweet), method: :post do %>
+                    <i class="far fa-heart"></i><%= @sweet.sweetslikes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= @sweet.sweetslikes.count %>
+        <% end %>
+        
+        </div>
+
+    <div class="comment-corner">
+        <% if user_signed_in? %>
+            <%= form_with(model: [@sweet, @sweetscomment], local: true) do |f| %>
+            <%= f.text_area :content, :size => "60x20" %>
+            <%= button_tag type: "submit" do %>
+                <i class="far fa-comments"></i> コメントする
+            <% end %>
+            <% end %>
+        <% end %>
+
+
+        <h4>コメント一覧</h4>
+        <div class="comment-wrapper">
+        
+        <% @sweetscomments.each do |c| %>
+            <div>
+            <div class="comment">
+            <%= c.user.name unless c.user.blank? %>
+            </div>
+            <br>
+
+            
+            <%= c.content %>
+            <% if user_signed_in? && current_user.id == c.user_id %>
+
+            <%= button_to "削除する",  sweetspresent_sweetscomment_path(c.id), method: :delete %>
+            <% end %> 
+            
+            </div>
+            <br>
+            <% end %>
+            <div class="box"></div>
+        </div>
+        
+
+        
+
+
+
+
+
+    </div>
+
+
+</div>
+<br><br><br><br>

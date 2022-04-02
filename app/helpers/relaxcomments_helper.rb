@@ -1,0 +1,2 @@
+module RelaxcommentsHelper
+end

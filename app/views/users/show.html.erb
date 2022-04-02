@@ -1,0 +1,82 @@
+
+<%= stylesheet_link_tag 'usershow', :media => "all" %>
+
+
+<br><br><br><br>
+<h1>マイページ</h1>
+<p>名前 : <%= @user.name %></p>
+<p>メールアドレス : <%= @user.email %></p>
+
+<% if current_user.id == @user.id %>
+    <%=link_to(edit_user_registration_path) do %>
+        <button class="edit" >編集する</button>
+    <%end%>
+<% end %>
+
+
+
+<h2>ユーザーの投稿一覧</h2>
+<h3>1.自分の聴いてほしい曲、音楽</h3>
+<% @user.musicpresents.each do |t| %>
+<div class=present>
+<div class="title"><%= t.title %></div>
+<%= t.body %>
+<br>
+<%= image_tag t.image_url, size: "300x250" if t.image? %>
+</div>
+<% end %>
+
+<h3>2.好きなスポーツ</h3>
+<% @user.sportspresents.each do |t| %>
+<div class=present>
+<div class="title"><%= t.title %></div>
+<%= t.body %>
+<br>
+<%= image_tag t.image_url, size: "300x250" if t.image? %>
+</div>
+<% end %>
+
+<h3>3.好きなスイーツ、スイーツ巡り</h3>
+<% @user.sweetspresents.each do |t| %>
+<div class=present>
+<div class="title"><%= t.title %></div>
+<%= t.body %>
+<br>
+<%= image_tag t.image_url, size: "300x250" if t.image? %>
+</div>
+<% end %>
+
+<h3>4.お気に入りの映画</h3>
+<% @user.moviepresents.each do |t| %>
+<div class=present>
+<div class="title"><%= t.title %></div>
+<%= t.body %>
+<br>
+<%= image_tag t.image_url, size: "300x250" if t.image? %>
+</div>
+<% end %>
+
+<h3>5.自分の持つ特技</h3>
+<% @user.skillpresents.each do |t| %>
+<div class=present>
+<div class="title"><%= t.title %></div>
+<%= t.body %>
+<br>
+<%= image_tag t.image_url, size: "300x250" if t.image? %>
+</div>
+<% end %>
+
+<h3>6.自分にとってのリラックスタイム</h3>
+<% @user.relaxpresents.each do |t| %>
+<div class=present>
+<div class="title"><%= t.title %></div>
+<%= t.body %>
+<br>
+<%= image_tag t.image_url, size: "300x250" if t.image? %>
+</div>
+<% end %>
+
+
+
+
+<%= link_to "戻る", introduce_index_path %>

@@ -1,0 +1,140 @@
+<%= stylesheet_link_tag 'skillindex', :media => "all" %>
+
+<div class="introduction">
+<h2>自分の持つ特技</h2>
+人が持つ特技はそれぞれ違います。自分の特技についてアピールすることは、面接においても役立つ要素になるかもしれません。あなたが自慢できると思う特技は何でしょうか？
+</div>
+
+<div class="skillform">
+<div class="bg">
+<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+
+
+
+<h4>投稿を検索</h4>
+<%= form_tag({controller:"skillpresents",action:"index"}, method: :get) do %>
+<%= text_field_tag :search %>
+<%= submit_tag '検索する'  %>
+<% end %>
+
+
+
+
+
+    <%=link_to("skillpresents/new") do %>
+        <button class="new" >新規投稿</button>
+    <%end%>
+
+
+</div>
+</div>
+
+
+
+
+<div class="skillpresents-container">
+<p id="skilllike"></p>
+<h3>高評価順</h3>
+<div class="link"><%= link_to '新規投稿順へ', skillpresents_path(anchor: 'skillnew'), class: 'skillnew' %></div>
+
+<%  @rank_skills.each do |t| %>
+<div class="skillpresent">
+    <div class="main-box">
+        <div class="left-container">
+
+        <div class="title"><%= t.title %> </div>
+        <br>
+        
+        <div class="body"><%= t.body %></div>
+        <br> 
+        <%= image_tag t.image_url, size: "300x250" if t.image? %>
+        <br>
+
+            <% if user_signed_in? %>
+                <% if current_user.already_skillliked?(t) %>
+                <%= link_to skillpresent_skilllike_path(id: t.id, skillpresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i> <%=t.skilllikes.count %>
+                <% end %>
+                <% else %>
+                <%= link_to skillpresent_skilllikes_path(id: t.id, skillpresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.skilllikes.count %>
+                <% end %>
+        <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= t.skilllikes.count %>
+        <% end %>
+                            <div class="right-container">
+                            <%= link_to "詳細へ", skillpresent_path(t.id) %>
+                            <% if user_signed_in? && current_user.id == t.user_id %>
+                            <%= link_to "編集する", edit_skillpresent_path(t.id) %>
+
+                            <%= button_to "削除する", skillpresent_path(t.id), method: :delete %>
+                            <% end %> 
+                            </div>
+        </div>
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+
+<br>
+<p id="skillnew"></p>
+<h3>新規投稿順</h3>
+<div class="link"><%= link_to '高評価順へ', skillpresents_path(anchor: 'skilllike'), class: 'skilllike' %></div>
+<br>
+
+<% @skills.each do |t| %>
+<div class="skillpresent">
+    <div class="main-box">
+
+            <div class="left-container">
+            <div class="title"><%= t.title %> </div>
+            <br>
+            <div class="body"><%= t.body %> </div> 
+            <br>
+            <%= image_tag t.image_url, size: "300x250" if t.image? %>
+            
+            <br>
+
+
+            <% if user_signed_in? %>
+            <% if current_user.already_skillliked?(t) %>
+                <%= link_to skillpresent_skilllike_path(id: t.id, skillpresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= t.skilllikes.count %>
+                <% end %>
+            <% else %>
+                <%= link_to skillpresent_skilllikes_path(id: t.id, skillpresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.skilllikes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="fas fa-heart"></i><%= t.skilllikes.count %>
+        <% end %>
+
+                    <div class="right-container">
+                    <%= link_to "詳細へ",skillpresent_path(t.id) %>
+                    <% if user_signed_in? && current_user.id == t.user_id %>
+                    <%= link_to "編集する", edit_skillpresent_path(t.id) %>
+
+                    <%= button_to "削除する", skillpresent_path(t.id), method: :delete %>
+                    <% end %> 
+                    </div>
+            </div>
+            
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+<%= link_to 'トップページ', introduce_index_path(anchor: 'text'), class: 'text' %>
+<br>
+<br>

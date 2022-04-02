@@ -1,0 +1,59 @@
+html{
+    background-color: rgb(147, 223, 147);
+    }
+
+.alls{
+    text-align: center;
+    padding-top: 80px;
+}
+
+
+input[type="text"]{
+    width: 350px;
+    height: 30px;
+    font-size: 20px;
+}
+
+.field{
+    font-size: 20px;
+}
+
+input[type="submit"]{
+    width: 250px;
+    height: 150px;
+    font-size: 45px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    background-color: rgb(12, 204, 12);
+}
+input[type="submit"]:hover{
+    background-color: rgb(12, 204, 12);
+}
+
+
+.musicsubmit {
+    width: 200px;
+    height: 150px;
+    border: 2px solid #404040;
+    box-shadow: none;
+    color: #000000;
+    background-color: rgb(12, 204, 12);
+    text-shadow: 0 0 0px transparent;
+    font-size: 45px;
+    font-weight: bold;
+    transition: .2s;
+    -webkit-transition: .2s;
+    padding: 15px 30px;
+    line-height: 40px;
+    margin: 0;
+    border-radius: 0;
+    cursor: pointer;
+    border-radius: 50px;
+}
+.musicsubmit:hover {
+    border: 2px solid rgb(201, 245, 201);
+    color: rgb(201, 245, 201);
+    text-shadow: 0 0 4px rgb(201, 245, 201);
+    box-shadow: inset 0 0 6px rgb(201, 245, 201),  0 0 6px rgb(201, 245, 201);
+    }

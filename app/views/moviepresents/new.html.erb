@@ -1,0 +1,24 @@
+<%= stylesheet_link_tag 'movienew', :media => "all" %>
+
+<%= form_for @movie do |f| %>
+<div class="alls">
+    <div class="field">
+
+        <%= f.label :title %>
+        <%= f.text_field :title, :size => 70 %>
+    <br>
+        <%= f.label :body %>
+        <%= f.text_area :body, :size => "150x30" %>
+    </div>
+    <div class="imagefield">
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+    </div>
+    <%= f.submit "投稿する", :class=> 'moviesubmit' %>
+    <% end %>
+    <br>
+    <%= link_to "一覧に戻る", moviepresents_path %>
+    <br>
+    <br>
+
+</div>

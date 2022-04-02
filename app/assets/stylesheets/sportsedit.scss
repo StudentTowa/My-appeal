@@ -1,0 +1,20 @@
+html{
+    background-color: rgb(96, 117, 233);
+    }
+
+.alls{
+    text-align: center;
+}
+
+input[type="submit"] {
+    width: 200px;
+    height: 120px;
+    font-size: 30px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    background-color: rgb(30, 52, 252);
+}
+
+input[type="submit"]:hover {
+    background-color:rgb(151, 164, 235);
+}

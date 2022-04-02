@@ -1,0 +1,140 @@
+    <%= stylesheet_link_tag 'movieindex', :media => "all" %>
+
+    <div class="introduction">
+    <h2>お気に入りの映画</h2>
+    ジブリだったりハリウッド映画だったり、いろんなジャンルの映画が製作されています。その中で、自分の見てほしいと思う映画についておすすめポイントなどを教えたりして、たくさんの人に興味を持ってもらいましょう。
+    </div>
+
+    <div class="movieform">
+    <div class="bg">
+    <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+    
+
+
+    <h4>投稿を検索</h4>
+    <%= form_tag({controller:"moviepresents",action:"index"}, method: :get) do %>
+    <%= text_field_tag :search %>
+    <%= submit_tag '検索する'  %>
+    <% end %>
+
+
+
+
+
+        <%=link_to("moviepresents/new") do %>
+            <button class="new" >新規投稿</button>
+        <%end%>
+
+
+    </div>
+    </div>
+
+
+
+
+<div class="moviepresents-container">
+<p id="movielike"></p>
+<h3>高評価順</h3>
+<div class="link"><%= link_to '新規投稿順へ', moviepresents_path(anchor: 'movienew'), class: 'movienew' %></div>
+
+<%  @rank_movies.each do |t| %>
+<div class="moviepresent">
+    <div class="main-box">
+        <div class="left-container">
+
+        <div class="title"><%= t.title %> </div>
+        <br>
+        
+        <div class="body"><%= t.body %></div>
+        <br> 
+        <%= image_tag t.image_url, size: "300x250" if t.image? %>
+        <br>
+
+            <% if user_signed_in? %>
+                <% if current_user.already_movieliked?(t) %>
+                <%= link_to moviepresent_movielike_path(id: t.id, moviepresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i> <%=t.movielikes.count %>
+                <% end %>
+                <% else %>
+                <%= link_to moviepresent_movielikes_path(id: t.id, moviepresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.movielikes.count %>
+                <% end %>
+        <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= t.movielikes.count %>
+        <% end %>
+                            <div class="right-container">
+                            <%= link_to "詳細へ",moviepresent_path(t.id) %>
+                            <% if user_signed_in? && current_user.id == t.user_id %>
+                            <%= link_to "編集する", edit_moviepresent_path(t.id) %>
+
+                            <%= button_to "削除する", moviepresent_path(t.id), method: :delete %>
+                            <% end %> 
+                            </div>
+        </div>
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+
+<br>
+<p id="movienew"></p>
+<h3>新規投稿順</h3>
+<div class="link"><%= link_to '高評価順へ', moviepresents_path(anchor: 'movielike'), class: 'movielike' %></div>
+<br>
+
+<% @movies.each do |t| %>
+<div class="moviepresent">
+    <div class="main-box">
+
+            <div class="left-container">
+            <div class="title"><%= t.title %> </div>
+            <br>
+            <div class="body"><%= t.body %> </div> 
+            <br>
+            <%= image_tag t.image_url, size: "300x250" if t.image? %>
+            
+            <br>
+
+
+            <% if user_signed_in? %>
+            <% if current_user.already_movieliked?(t) %>
+                <%= link_to moviepresent_movielike_path(id: t.id, moviepresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= t.movielikes.count %>
+                <% end %>
+            <% else %>
+                <%= link_to moviepresent_movielikes_path(id: t.id, moviepresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.movielikes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="fas fa-heart"></i><%= t.movielikes.count %>
+        <% end %>
+
+                    <div class="right-container">
+                    <%= link_to "詳細へ",moviepresent_path(t.id) %>
+                    <% if user_signed_in? && current_user.id == t.user_id %>
+                    <%= link_to "編集する", edit_moviepresent_path(t.id) %>
+
+                    <%= button_to "削除する", moviepresent_path(t.id), method: :delete %>
+                    <% end %> 
+                    </div>
+            </div>
+            
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+<%= link_to 'トップページ', introduce_index_path(anchor: 'text'), class: 'text' %>
+<br>
+<br>

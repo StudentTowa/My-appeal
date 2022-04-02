@@ -1,0 +1,80 @@
+<%= stylesheet_link_tag 'movieshow', :media => "all" %>
+
+
+<br><br><br><br>
+    <%= link_to "一覧に戻る", moviepresents_path %>
+
+    <div class="moviepresents">
+        <div class="shows">
+        <p><div class="title"><%= @movie.title %></div></p>
+        <p><div class="body"><%= @movie.body %></div></p>
+        <%= image_tag @movie.image_url, size: "250x200" if @movie.image? %>
+        <br>
+        <p><%= @movie.user.name %></p>
+        <p><%= @movie.created_at %></p>
+
+
+
+
+        <% if user_signed_in? %>
+            <% if current_user.already_movieliked?(@movie) %>
+                <%= link_to moviepresent_movielike_path(@movie), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= @movie.movielikes.count %>
+                <% end %>
+            <% else %>
+            <%= link_to moviepresent_movielikes_path(@movie), method: :post do %>
+                    <i class="far fa-heart"></i><%= @movie.movielikes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= @movie.movielikes.count %>
+        <% end %>
+        
+        </div>
+
+    <div class="comment-corner">
+        <% if user_signed_in? %>
+            <%= form_with(model: [@movie, @moviecomment], local: true) do |f| %>
+            <%= f.text_area :content, :size => "60x20" %>
+            <%= button_tag type: "submit" do %>
+                <i class="far fa-comments"></i> コメントする
+            <% end %>
+            <% end %>
+        <% end %>
+
+
+        <h4>コメント一覧</h4>
+        <div class="comment-wrapper">
+        
+        <% @moviecomments.each do |c| %>
+            <div>
+            <div class="comment">
+            <%= c.user.name unless c.user.blank? %>
+            </div>
+            <br>
+
+            
+            <%= c.content %>
+                                        <% if user_signed_in? && current_user.id == c.user_id %>
+
+                            <%= button_to "削除する",  moviepresent_moviecomment_path(c.id), method: :delete %>
+                            <% end %> 
+            
+            </div>
+            <br>
+            <% end %>
+            <div class="box"></div>
+        </div>
+        
+
+        
+
+
+
+
+
+    </div>
+
+
+</div>
+<br><br><br><br>

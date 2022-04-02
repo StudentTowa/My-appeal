@@ -1,0 +1,24 @@
+<%= stylesheet_link_tag 'sweetsnew', :media => "all" %>
+
+<%= form_for @sweet do |f| %>
+<div class="alls">
+    <div class="field">
+
+        <%= f.label :title %>
+        <%= f.text_field :title, :size => 70 %>
+    <br>
+        <%= f.label :body %>
+        <%= f.text_area :body, :size => "150x30" %>
+    </div>
+    <div class="imagefield">
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+    </div>
+    <%= f.submit "投稿する", :class=> 'sweetssubmit' %>
+    <% end %>
+    <br>
+    <%= link_to "一覧に戻る", sweetspresents_path %>
+    <br>
+    <br>
+
+</div>

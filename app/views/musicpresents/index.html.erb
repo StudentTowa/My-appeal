@@ -1,0 +1,144 @@
+<%= stylesheet_link_tag 'musicindex', :media => "all" %>
+
+    <div class="introduction">
+    <h2>自分の聴いてほしい曲、音楽</h2>
+    人にとっては、経験的になじみのある曲だったり、自分の思い出、経験と縁の深い曲を持っていたりするかと思います。そのような曲や音楽たちをみなさんと共有するために、自分のぜひ聞いてほしいと思う曲、音楽をアピールしましょう。
+    </div>
+
+    <div class="musicform">
+    <div class="bg">
+        <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+
+
+
+        <h4>投稿を検索</h4>
+        <%= form_tag({controller:"musicpresents",action:"index"}, method: :get) do %>
+        <%= text_field_tag :search %>
+        <%= submit_tag '検索する'  %>
+        <% end %>
+
+
+
+
+        <%=link_to("musicpresents/new") do %>
+            <button class="new" >新規投稿</button>
+        <%end%>
+
+
+    </div>
+    </div>
+
+
+
+
+<div class="musicpresents-container">
+<p id="musiclike"></p>
+<h3>高評価順</h3>
+<div class="link"><%= link_to '新規投稿順へ', musicpresents_path(anchor: 'musicnew'), class: 'musicnew' %></div>
+
+<% @rank_musics.each do |t| %>
+<div class="musicpresent">
+    <div class="main-box">
+        <div class="left-container">
+        
+        <div class="title"><%= t.title %> </div>
+        <br>
+        
+        <div class="body"><%= t.body %></div>
+        <br> 
+        <%= image_tag t.image_url, size: "300x250" if t.image? %>
+        <br>
+        
+            <% if user_signed_in? %>
+                <% if current_user.already_liked?(t) %>
+                <%= link_to  musicpresent_like_path(id: t.id, musicpresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= t.likes.count %>
+                <% end %>
+                <% else %>
+                <%= link_to  musicpresent_likes_path(id: t.id,  musicpresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.likes.count %>
+                <% end %>
+                <% end %>
+            <% else %>
+        <p>いいねの数 = </p><%= t.likes.count %>
+            <% end %>
+                            <div class="right-container">
+                            <%= link_to "詳細へ",  musicpresent_path(t.id) %>
+                            <% if user_signed_in? && current_user.id == t.user_id %>
+                            <%= link_to "編集する", edit_musicpresent_path(t.id) %>
+
+                            <%= button_to "削除する",  musicpresent_path(t.id), method: :delete %>
+                            <% end %> 
+                            </div>
+        </div>
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+
+<br>
+<p id="musicnew"></p>
+<h3>新規投稿順</h3>
+<div class="link"><%= link_to '高評価順へ', musicpresents_path(anchor: 'musiclike'), class: 'musiclike' %></div>
+<br>
+
+<% @musics.each do |t| %>
+<div class="musicpresent">
+    <div class="main-box">
+
+            <div class="left-container">
+            <div class="title"><%= t.title %> </div>
+            <br>
+            <div class="body"><%= t.body %> </div> 
+            <br>
+            <%= image_tag t.image_url, size: "300x250" if t.image? %>
+            
+            <br>
+            
+
+            <% if user_signed_in? %>
+            <% if current_user.already_liked?(t) %>
+                <%= link_to  musicpresent_like_path(id: t.id,  musicpresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= t.likes.count %>
+                <% end %>
+            <% else %>
+                <%= link_to  musicpresent_likes_path(id: t.id,  musicpresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.likes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= t.likes.count %>
+        <% end %>
+
+                    <div class="right-container">
+                    <%= link_to "詳細へ",  musicpresent_path(t.id) %>
+                    <% if user_signed_in? && current_user.id == t.user_id %>
+                    <%= link_to "編集する", edit_musicpresent_path(t.id) %>
+
+                    <%= button_to "削除する",  musicpresent_path(t.id), method: :delete %>
+                    <% end %> 
+                    </div>
+            </div>
+            
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+
+
+</div>
+
+<%= link_to 'トップページ', introduce_index_path(anchor: 'text'), class: 'text' %>
+<br>
+<br>
+

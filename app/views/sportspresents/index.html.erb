@@ -1,0 +1,140 @@
+<%= stylesheet_link_tag 'sportsindex', :media => "all" %>
+
+<div class="introduction">
+<h2>好きなスポーツ</h2>
+野球、サッカー、ボクシングなど、スポーツには様々ありますが、スポーツ好きなあなたの一番好きなスポーツは何でしょうか。自分のお気に入りのスポーツの魅力を、いろんな人々に伝えましょう。
+</div>
+
+<div class="sportsform">
+<div class="bg">
+<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+
+
+
+<h4>投稿を検索</h4>
+<%= form_tag({controller:"sportspresents",action:"index"}, method: :get) do %>
+<%= text_field_tag :search %>
+<%= submit_tag '検索する'  %>
+<% end %>
+
+
+
+
+
+    <%=link_to("sportspresents/new") do %>
+        <button class="new" >新規投稿</button>
+    <%end%>
+
+
+</div>
+</div>
+
+
+
+
+<div class="sportspresents-container">
+<p id="sportslike"></p>
+<h3>高評価順</h3>
+<div class="link"><%= link_to '新規投稿順へ', sportspresents_path(anchor: 'sportsnew'), class: 'sportsnew' %></div>
+
+<%  @rank_sports.each do |t| %>
+<div class="sportspresent">
+    <div class="main-box">
+        <div class="left-container">
+
+        <div class="title"><%= t.title %> </div>
+        <br>
+        
+        <div class="body"><%= t.body %></div>
+        <br> 
+        <%= image_tag t.image_url, size: "300x250" if t.image? %>
+        <br>
+
+            <% if user_signed_in? %>
+                <% if current_user.already_sportsliked?(t) %>
+                <%= link_to sportspresent_sportslike_path(id: t.id, sportspresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i> <%=t.sportslikes.count %>
+                <% end %>
+                <% else %>
+                <%= link_to sportspresent_sportslikes_path(id: t.id, sportspresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.sportslikes.count %>
+                <% end %>
+        <% end %>
+        <% else %>
+            <i class="far fa-heart"></i><%= t.sportslikes.count %>
+        <% end %>
+                            <div class="right-container">
+                            <%= link_to "詳細へ",sportspresent_path(t.id) %>
+                            <% if user_signed_in? && current_user.id == t.user_id %>
+                            <%= link_to "編集する", edit_sportspresent_path(t.id) %>
+
+                            <%= button_to "削除する", sportspresent_path(t.id), method: :delete %>
+                            <% end %> 
+                            </div>
+        </div>
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+
+<br>
+<p id="sportsnew"></p>
+<h3>新規投稿順</h3>
+<div class="link"><%= link_to '高評価順へ', sportspresents_path(anchor: 'sportslike'), class: 'sportslike' %></div>
+<br>
+
+<% @sports.each do |t| %>
+<div class="sportspresent">
+    <div class="main-box">
+
+            <div class="left-container">
+            <div class="title"><%= t.title %> </div>
+            <br>
+            <div class="body"><%= t.body %> </div> 
+            <br>
+            <%= image_tag t.image_url, size: "300x250" if t.image? %>
+            
+            <br>
+
+
+            <% if user_signed_in? %>
+            <% if current_user.already_sportsliked?(t) %>
+                <%= link_to sportspresent_sportslike_path(id: t.id, sportspresent_id: t.id), method: :delete do %>
+                    <i class="fas fa-heart"></i><%= t.sportslikes.count %>
+                <% end %>
+            <% else %>
+                <%= link_to sportspresent_sportslikes_path(id: t.id, sportspresent_id: t.id), method: :post do %>
+                    <i class="far fa-heart"></i><%= t.sportslikes.count %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <i class="fas fa-heart"></i><%= t.sportslikes.count %>
+        <% end %>
+
+                    <div class="right-container">
+                    <%= link_to "詳細へ",sportspresent_path(t.id) %>
+                    <% if user_signed_in? && current_user.id == t.user_id %>
+                    <%= link_to "編集する", edit_sportspresent_path(t.id) %>
+
+                    <%= button_to "削除する", sportspresent_path(t.id), method: :delete %>
+                    <% end %> 
+                    </div>
+            </div>
+            
+    <p class="imformation">
+    <%= t.user.name %>
+    <br>
+    <%= t.created_at %>
+    </p>
+    </div>
+</div>
+<% end %>
+
+<%= link_to 'トップページ', introduce_index_path(anchor: 'text'), class: 'text' %>
+<br>
+<br>
